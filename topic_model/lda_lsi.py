@@ -1,5 +1,6 @@
 import jieba
 import re
+import gensim
 from gensim import models
 from six import iteritems
 #coding:utf-8
@@ -38,6 +39,12 @@ def topicModel(content,topic_num=10):
     lsi_model=models.LsiModel(tfidf_corpus,num_topics=topic_num,id2word=dictionary)
     topics_lsi=lsi_model.print_topics(5)
     pprint(topics_lsi)
+    
+    #转换成numpy 数组
+    corpus_lsi=lsi_model[tfidf_corpus]
+    docs_lsi=gensim.matutils.corpus2dense(corpus_lsi,num_terms=topic_num)
+    print(docs_lsi.shape)
+        
     
     lda=models.LdaModel(corpus,num_topics=topic_num,id2word=dictionary)
     topics_lda=lda.print_topics(5)
