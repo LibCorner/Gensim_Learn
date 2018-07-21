@@ -58,6 +58,7 @@ def topicModel(content,topic_num=10):
     
     lda=models.LdaModel(corpus,num_topics=topic_num,id2word=dictionary)
     topics_lda=lda.print_topics(5)
+    print("=================================================")
     pprint(topics_lda)
     return dictionary,lda,lsi_model
     
@@ -78,7 +79,13 @@ if __name__=="__main__":
             "谁 的 啊 ， 这 大 魅力 啊 ？"]
     dictionary,lda,lsi=topicModel(content,topic_num=100)
     
-    for i in range(0,100):
+    #输出主题词
+    lda.show_topics(num_topics=5,num_words=5,formatted=False)
+    print("=============================================")
+    lda.show_topic(2,topn=10)
+    print("============================================")
+    
+    for i in range(0,3):
         d=lda.get_term_topics(i,minimum_probability=1e-8)
         print(dictionary.id2token[i],d)
     
