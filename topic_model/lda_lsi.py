@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import jieba
 import re
 import gensim
@@ -49,6 +50,7 @@ def topicModel(content,topic_num=10):
     lda=models.LdaModel(corpus,num_topics=topic_num,id2word=dictionary)
     topics_lda=lda.print_topics(5)
     pprint(topics_lda)
+    return dictionary,lda,lsi_model
     
 if __name__=="__main__":
     content=["你 最近 光顾 着 玩 了 ， 没有 注意 到 我 微博 里 的 新 动向 。",
@@ -65,4 +67,9 @@ if __name__=="__main__":
             "那 鼻子 真是 亮点",
             "其实 这种 天气 是 很 适合 睡觉 的 ， 我 这 人 讨厌 死 了 ， 在家 不 睡 ， 现在 却 很 困",
             "谁 的 啊 ， 这 大 魅力 啊 ？"]
-    topicModel(content,topic_num=10)
+    dictionary,lda,lsi=topicModel(content,topic_num=100)
+    
+    for i in range(0,100):
+        d=lda.get_term_topics(i)
+        print(dictionary.id2token[i],d)
+    
