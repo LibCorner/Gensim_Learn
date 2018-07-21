@@ -47,9 +47,9 @@ def topicModel(content,topic_num=10):
     
     #lsi model
     lsi_model=models.LsiModel(tfidf_corpus,num_topics=topic_num,id2word=dictionary)
-    topics_lsi=lsi_model.print_topics(5)
+    topics_lsi=lsi_model.print_topics(num_topics=1,num_words=5)
     pprint(topics_lsi)
-    
+    print("=================================================")
     #转换成numpy 数组
     corpus_lsi=lsi_model[tfidf_corpus]
     docs_lsi=gensim.matutils.corpus2dense(corpus_lsi,num_terms=topic_num)
@@ -57,9 +57,9 @@ def topicModel(content,topic_num=10):
         
     
     lda=models.LdaModel(corpus,num_topics=topic_num,id2word=dictionary)
-    topics_lda=lda.print_topics(5)
-    print("=================================================")
+    topics_lda=lda.print_topics(num_topics=3,num_words=20)
     pprint(topics_lda)
+    print("=================================================")
     return dictionary,lda,lsi_model
     
 if __name__=="__main__":
@@ -80,9 +80,11 @@ if __name__=="__main__":
     dictionary,lda,lsi=topicModel(content,topic_num=100)
     
     #输出主题词
-    lda.show_topics(num_topics=5,num_words=5,formatted=False)
+    topics=lda.show_topics(num_topics=5,num_words=6,formatted=False)
+    print(topics)
     print("=============================================")
-    lda.show_topic(2,topn=10)
+    topic=lda.show_topic(2,topn=4)
+    print(topic)
     print("============================================")
     
     for i in range(0,3):
