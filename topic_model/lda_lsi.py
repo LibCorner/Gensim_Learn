@@ -9,7 +9,16 @@ from gensim import corpora
 from sklearn.feature_extraction.text import CountVectorizer
 from pprint import pprint
 
-stop_words=['是','的']
+'''
+1. LdaModel的get_term_topics( word_id, minimum_probability=None)
+    得到每个单词的概率最大的一些主题
+    参数：
+        word_id: 单词在dictionary中的id
+        minimum_probability: 最小的主题概率
+'''
+
+stop_words=['是','的','我','也']
+
 
 
 def topicModel(content,topic_num=10):
@@ -70,6 +79,6 @@ if __name__=="__main__":
     dictionary,lda,lsi=topicModel(content,topic_num=100)
     
     for i in range(0,100):
-        d=lda.get_term_topics(i)
+        d=lda.get_term_topics(i,minimum_probability=1e-8)
         print(dictionary.id2token[i],d)
     
